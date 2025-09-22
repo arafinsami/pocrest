@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration
+        https://nablarch.github.io/schema/component-configuration.xsd">
+
+    <!-- ========= Import Nablarch standard configs ========= -->
+    <import file="nablarch/core/db/connection-factory-datasource.xml"/>
+
+    <!-- ========= Transaction Manager ========= -->
+    <component name="defaultDbTransactionManager"
+               class="nablarch.core.db.transaction.SimpleDbTransactionManager">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="transactionFactory">
+            <component class="nablarch.core.db.transaction.JdbcTransactionFactory">
+                <!-- Use isolation + timeout from properties -->
+                <property name="isolationLevel" value="${nablarch.transactionFactory.isolationLevel}"/>
+                <property name="transactionTimeoutSec" value="${nablarch.transactionFactory.transactionTimeoutSec}"/>
+            </component>
+        </property>
+    </component>
+
+    <import file="nablarch/core/date/system-date.xml"/>
+    <import file="nablarch/core/date/business-date.xml"/>
+
+    <!-- ========= Application-specific properties ========= -->
+    <config-file file="config.properties"/>
+    <config-file file="business-date.properties"/>
+
+    <!-- ========= DataSource (HikariCP) ========= -->
+    <component name="dataSource" class="com.zaxxer.hikari.HikariDataSource" autowireType="None">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/nablarchdemo?currentSchema=public"/>
+        <property name="username" value="sami"/>
+        <property name="password" value="sami"/>
+        <property name="maximumPoolSize" value="10"/>
+    </component>
+
+    <!-- ========= ConnectionFactory (wraps DataSource) ========= -->
+    <component name="connectionFactory"
+               class="nablarch.core.db.connection.BasicDbConnectionFactoryForDataSource">
+        <property name="dataSource" ref="dataSource"/>
+    </component>
+    <component name="dialect" class="nablarch.core.db.dialect.PostgreSQLDialect"/>
+</component-configuration>

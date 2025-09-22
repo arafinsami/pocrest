@@ -1,0 +1,43 @@
+# Maven build
+/target/
+/out/
+/build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+logs/
+*.out
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Nablarch specific
+generated-sources/
+sql/generate/
+
+# Environment / Secrets
+application-local.properties
+*.env
+*.local

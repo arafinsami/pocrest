@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration
+    https://nablarch.github.io/schema/component-configuration.xsd">
+
+    <!-- Keep infra parts you already have -->
+    <import file="transaction-manager.xml"/>      <!-- DataSource, Txn, BusinessDate, etc. -->
+    <import file="application-beans.xml"/>        <!-- Your repository/service beans         -->
+    <import file="validation.xml"/>               <!-- Bean validation settings              -->
+<!--    <import file="security.xml"/>                 &lt;!&ndash; Your RBAC/auth components             &ndash;&gt;-->
+
+    <!-- === Router: annotation-based (JAX-RS @Path) === -->
+    <component name="packageMapping"
+               class="nablarch.integration.router.PathOptionsProviderRoutesMapping">
+
+        <property name="pathOptionsProvider">
+            <component class="nablarch.integration.router.jaxrs.JaxRsPathOptionsProvider">
+                <!-- All REST paths are under /api -->
+                <property name="applicationPath" value="/api" />
+                <!-- Where your JAX-RS resources live -->
+                <property name="basePackage" value="com.poc.api" />
+            </component>
+        </property>
+
+        <property name="methodBinderFactory">
+            <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
+                <property name="handlerList">
+                    <!-- Choose ONE. Jersey for Tomcat/Payara/GlassFish: -->
+                    <component class="nablarch.integration.jaxrs.jersey.JerseyJaxRsHandlerListFactory"/>
+                    <!-- If using WildFly/JBoss, replace with:
+                    <component class="nablarch.integration.jaxrs.resteasy.ResteasyJaxRsHandlerListFactory"/>
+                    -->
+                </property>
+            </component>
+        </property>
+    </component>
+
+
+    <!-- === REST handler queue (no ForwardingHandler, JSON only) === -->
+    <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">
+        <property name="handlerQueue">
+            <list>
+                <component class="nablarch.fw.web.handler.HttpCharacterEncodingHandler"/>
+                <component class="nablarch.fw.handler.GlobalErrorHandler"/>
+<!--                <component class="nablarch.fw.web.handler.HttpResponseHandler"/>-->
+                <component class="nablarch.fw.jaxrs.JaxRsResponseHandler"/>
+                <component class="nablarch.fw.web.handler.HttpErrorHandler"/>
+                <component class="nablarch.common.handler.DbConnectionManagementHandler"/>
+                <component class="nablarch.common.handler.TransactionManagementHandler"/>
+                <!-- keep your security handler if you were using it -->
+<!--                <component-ref name="rbacHandler"/>-->
+                <!-- dispatch into @Path resources -->
+                <component-ref name="packageMapping"/>
+            </list>
+        </property>
+    </component>
+
+    <!-- Initialize router so it logs discovered routes at startup -->
+    <component name="initializer" class="nablarch.core.repository.initialization.BasicApplicationInitializer">
+        <property name="initializeList">
+            <list>
+                <component-ref name="packageMapping"/>
+            </list>
+        </property>
+    </component>
+</component-configuration>
