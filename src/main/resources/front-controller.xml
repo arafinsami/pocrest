@@ -9,7 +9,7 @@
         <property name="pathOptionsProvider">
             <component class="nablarch.integration.router.jaxrs.JaxRsPathOptionsProvider">
                 <property name="applicationPath" value="/action"/>
-                <property name="basePackage" value="com.poc.controller"/>
+                <property name="basePackage" value="com.poc.resource"/>
             </component>
         </property>
         <property name="methodBinderFactory">

@@ -1,0 +1,36 @@
+-- Drop old tables in proper dependency order
+DROP TABLE IF EXISTS app_user CASCADE;
+DROP TABLE IF EXISTS business_date CASCADE;
+DROP TABLE IF EXISTS id_generator CASCADE;
+
+-- Application user table
+CREATE TABLE app_user (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,  -- portable auto-increment
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Business date table (required by Nablarch framework)
+CREATE TABLE business_date (
+  segment VARCHAR(30) PRIMARY KEY,
+  business_date DATE NOT NULL
+);
+
+-- ID generator table
+CREATE TABLE id_generator (
+  id_name VARCHAR(50) PRIMARY KEY,
+  id_value BIGINT
+);
+
+-- Seed ID generator
+INSERT INTO id_generator (id_name, id_value) VALUES ('APP_USER', 1);
+
+-- Seed business date
+INSERT INTO business_date (segment, business_date) VALUES ('default', CURRENT_DATE);
+
+-- Seed initial admin user
+INSERT INTO app_user (first_name, last_name, email, password)
+VALUES ('Admin', 'User', 'admin@example.com', 'admin123')
+ON CONFLICT (email) DO NOTHING;

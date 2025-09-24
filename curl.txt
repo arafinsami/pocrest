@@ -7,26 +7,26 @@ curl -X GET http://localhost:7000/action/users \
 curl -X POST http://localhost:7000/action/users \
   -H "Content-Type: application/json" \
   -d '{
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john.doe@example.com",
-    "password": "mypassword123"
+    "firstName": "Samiul",
+    "lastName": "Arafin",
+    "email": "sami.arafin@gmail.com.com",
+    "password": "sami123"
   }'
 
 
 # 3. Update a user (replace {id} with actual user ID)
-curl -X PUT http://localhost:7000/action/users/4 \
+curl -X PUT http://localhost:7000/action/users/2 \
   -H "Content-Type: application/json" \
   -d '{
-    "firstName": "Johnny",
-    "lastName": "Doe",
-    "email": "johnny.doe@example.com",
+    "firstName": "MdSamiul",
+    "lastName": "Arafinn",
+    "email": "arafin@gmail.com.com",
     "password": "newpassword123"
   }'
 
 
 # 4. Delete a user (replace {id} with actual user ID)
-curl -X DELETE http://localhost:7000/action/users/3
+curl -X DELETE http://localhost:7000/action/users/2
 
 
 # 5. Test echo endpoint
