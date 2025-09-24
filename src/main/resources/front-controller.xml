@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration
+        https://nablarch.github.io/schema/component-configuration.xsd">
+
+    <component name="packageMapping" class="nablarch.integration.router.PathOptionsProviderRoutesMapping">
+        <property name="pathOptionsProvider">
+            <component class="nablarch.integration.router.jaxrs.JaxRsPathOptionsProvider">
+                <property name="applicationPath" value="/action"/>
+                <property name="basePackage" value="com.poc.controller"/>
+            </component>
+        </property>
+        <property name="methodBinderFactory">
+            <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
+                <property name="handlerList">
+                    <component class="nablarch.integration.jaxrs.jersey.JerseyJaxRsHandlerListFactory"/>
+                </property>
+            </component>
+        </property>
+    </component>
+
+    <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">
+        <property name="handlerQueue">
+            <list>
+                <component class="nablarch.fw.web.handler.HttpCharacterEncodingHandler"/>
+                <component class="nablarch.common.handler.threadcontext.ThreadContextClearHandler"/>
+                <component class="nablarch.fw.handler.GlobalErrorHandler"/>
+                <component class="nablarch.fw.jaxrs.JaxRsResponseHandler"/>
+                <component class="nablarch.fw.jaxrs.JaxRsAccessLogHandler"/>
+                <component-ref name="dbConnectionManagementHandler"/>
+                <component-ref name="transactionManagementHandler"/>
+                <component-ref name="packageMapping"/>
+            </list>
+        </property>
+    </component>
+
+    <component name="initializer" class="nablarch.core.repository.initialization.BasicApplicationInitializer">
+        <property name="initializeList">
+            <list>
+                <component-ref name="packageMapping"/>
+            </list>
+        </property>
+    </component>
+</component-configuration>

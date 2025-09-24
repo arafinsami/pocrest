@@ -5,6 +5,7 @@ import com.poc.repository.AppUserRepository;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 public class AppUserService {
@@ -15,22 +16,31 @@ public class AppUserService {
         return appUserRepository.findAll();
     }
 
-    public AppUser getUser(Long id) {
-        return appUserRepository.findById(id);
+    public Optional<AppUser> getUserById(Long id) {
+        return Optional.ofNullable(appUserRepository.findById(id));
     }
 
-    public void createUser(AppUser user) {
+    public AppUser createUser(AppUser user) {
         appUserRepository.insert(user);
+        return user;
     }
 
-    public void updateUser(AppUser user) {
-        appUserRepository.update(user);
-    }
-
-    public void deleteUser(Long id) {
-        AppUser user = appUserRepository.findById(id);
-        if (user != null) {
-            appUserRepository.delete(user);
+    public Optional<AppUser> updateUser(Long id, AppUser updated) {
+        AppUser existing = appUserRepository.findById(id);
+        if (existing == null) {
+            return Optional.empty();
         }
+        updated.setId(id);
+        appUserRepository.update(updated);
+        return Optional.of(updated);
+    }
+
+    public Optional<AppUser> deleteUser(Long id) {
+        AppUser existing = appUserRepository.findById(id);
+        if (existing == null) {
+            return Optional.empty();
+        }
+        appUserRepository.delete(existing);
+        return Optional.of(existing);
     }
 }
