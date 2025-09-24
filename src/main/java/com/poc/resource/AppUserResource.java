@@ -25,9 +25,9 @@ public class AppUserResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     @Valid
-    public HttpResponse create(AppUserDTO dto) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public HttpResponse create(@Valid AppUserDTO dto) {
         return ((AbstractProcessor) processor).create(dto);
     }
 
@@ -38,10 +38,10 @@ public class AppUserResource {
     }
 
     @PUT
+    @Valid
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Valid
-    public HttpResponse update(AppUserDTO dto, JaxRsHttpRequest req) {
+    public HttpResponse update(@Valid AppUserDTO dto, JaxRsHttpRequest req) {
         return ((AbstractProcessor) processor).update(dto, req);
     }
 

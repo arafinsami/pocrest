@@ -21,19 +21,19 @@ public class AppUserDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "first name must not be empty")
-    @Size(min = 3, max = 15, message = "first name must be 3–15 chars")
+    @NotBlank(message = "{NotBlank.form.firstName}")
+    @Size(min = 3, max = 15, message = "{Size.form.firstName}")
     private String firstName;
 
-    @NotBlank(message = "last name must not be empty")
-    @Size(min = 3, max = 15, message = "last name must be 3–15 chars")
+    @NotBlank(message = "{NotBlank.form.lastName}")
+    @Size(min = 3, max = 15, message = "{Size.form.lastName}")
     private String lastName;
 
-    @NotBlank(message = "email must not be empty")
-    @Size(min = 10, max = 50, message = "email name must be 10–50 chars")
+    @NotBlank(message = "{NotBlank.form.email}")
+    @Size(min = 10, max = 50, message = "{Size.form.email}")
     private String email;
 
-    @NotBlank(message = "password must not be empty")
-    @Size(min = 10, max = 50, message = "password must be 10–50 chars")
+    @NotBlank(message = "{NotBlank.form.password}")
+    @Size(min = 10, max = 50, message = "{Size.form.password}")
     private String password;
 }

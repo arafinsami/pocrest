@@ -1,21 +1,21 @@
 # 1. Get all users
-curl -X GET http://localhost:7000/action/users \
+curl -X GET http://localhost:8080/action/users \
   -H "Accept: application/json"
 
 
 # 2. Create a new user
-curl -X POST http://localhost:7000/action/users \
+curl -X POST http://localhost:8080/action/users \
   -H "Content-Type: application/json" \
   -d '{
     "firstName": "Samiul",
     "lastName": "Arafin",
     "email": "sami.arafin@gmail.com.com",
-    "password": "sami123"
+    "password": "sami123456789"
   }'
 
 
 # 3. Update a user (replace {id} with actual user ID)
-curl -X PUT http://localhost:7000/action/users/2 \
+curl -X PUT http://localhost:8080/action/users/2 \
   -H "Content-Type: application/json" \
   -d '{
     "firstName": "MdSamiul",
@@ -26,9 +26,9 @@ curl -X PUT http://localhost:7000/action/users/2 \
 
 
 # 4. Delete a user (replace {id} with actual user ID)
-curl -X DELETE http://localhost:7000/action/users/2
+curl -X DELETE http://localhost:8080/action/users/2
 
 
 # 5. Test echo endpoint
-curl -X GET http://localhost:7000/action/users/echo/123 \
+curl -X GET http://localhost:8080/action/users/echo/123 \
   -H "Accept: application/json"

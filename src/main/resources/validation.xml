@@ -5,23 +5,10 @@
         xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration
         https://nablarch.github.io/schema/component-configuration.xsd">
 
-    <!-- Charset rules (needed by Nablarch validators) -->
     <import file="nablarch/core/validation/charset-definition.xml"/>
-
-    <!-- Your domain manager -->
     <component name="appUserDomainManager" class="com.poc.validation.AppUserDomainManager"/>
-
-    <!-- Validation strategy (JSR-303 Bean Validation via Nablarch Web) -->
-    <component name="validationStrategy"
-               class="nablarch.common.web.validator.BeanValidationStrategy">
+    <component name="validationStrategy" class="nablarch.common.web.validator.BeanValidationStrategy">
         <property name="copyBeanToRequestScopeOnError" value="true"/>
     </component>
-
-    <!-- Optional: converts violation messages -->
-    <!--    <component name="constraintViolationConverterFactory"-->
-    <!--               class="nablarch.core.validation.ee.ItemNamedConstraintViolationConverterFactory"/>-->
-
-    <component name="constraintViolationConverterFactory"
-               class="com.poc.validation.SimpleConstraintViolationConverterFactory"/>
-
+    <component name="errorResponseBuilder" class="com.poc.validation.JsonErrorResponseBuilder"/>
 </component-configuration>

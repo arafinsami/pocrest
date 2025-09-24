@@ -35,36 +35,36 @@ project-root/
 │── README.md
 
 ## API ENDPOINTS
-Base URL → http://localhost:7000/action/users
+Base URL → http://localhost:8080/action/users
 
 ### GET ALL USERS
-curl -X GET http://localhost:7000/action/users -H "Accept: application/json"
+curl -X GET http://localhost:8080/action/users -H "Accept: application/json"
 RESPONSE:
 [
 {"id":1,"firstName":"Samiul","lastName":"Arafin","email":"sami.arafin@gmail.com","password":"sami123"}
 ]
 
 ### CREATE A NEW USER
-curl -X POST http://localhost:7000/action/users \
+curl -X POST http://localhost:8080/action/users \
 -H "Content-Type: application/json" \
 -d '{"firstName":"Samiul","lastName":"Arafin","email":"sami.arafin@gmail.com","password":"sami123"}'
 RESPONSE:
 {"id":2,"firstName":"Samiul","lastName":"Arafin","email":"sami.arafin@gmail.com","message":"User created successfully"}
 
 ### UPDATE A USER
-curl -X PUT http://localhost:7000/action/users/2 \
+curl -X PUT http://localhost:8080/action/users/2 \
 -H "Content-Type: application/json" \
 -d '{"firstName":"MdSamiul","lastName":"Arafinn","email":"arafin@gmail.com","password":"newpassword123"}'
 RESPONSE:
 {"id":2,"firstName":"MdSamiul","lastName":"Arafinn","email":"arafin@gmail.com","message":"User updated successfully"}
 
 ### DELETE A USER
-curl -X DELETE http://localhost:7000/action/users/2
+curl -X DELETE http://localhost:8080/action/users/2
 RESPONSE:
 {"message":"User deleted successfully"}
 
 ### TEST ECHO ENDPOINT
-curl -X GET http://localhost:7000/action/users/echo/123 -H "Accept: application/json"
+curl -X GET http://localhost:8080/action/users/echo/123 -H "Accept: application/json"
 RESPONSE:
 {"echo":"123"}
 
