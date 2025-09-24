@@ -9,7 +9,12 @@
     <component name="appUserService" class="com.poc.service.AppUserService">
         <property name="appUserRepository" ref="appUserRepository"/>
     </component>
-    <component name="appUserProcessor" class="com.poc.processor.AppUserProcessor">
+
+    <component name="appUserFacade" class="com.poc.facade.AppUserFacade">
         <property name="appUserService" ref="appUserService"/>
     </component>
+    <component name="appUserProcessor" class="com.poc.processor.AppUserProcessor">
+        <property name="appUserFacade" ref="appUserFacade"/>
+    </component>
+
 </component-configuration>

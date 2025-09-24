@@ -1,9 +1,8 @@
 package com.poc.processor;
 
 import com.poc.dto.AppUserDTO;
-import com.poc.entity.AppUser;
-import com.poc.mapper.AppUserMapper;
-import com.poc.service.AppUserService;
+import com.poc.facade.BaseFacade;
+import com.poc.facade.Facade;
 import jakarta.ws.rs.NotFoundException;
 import nablarch.fw.jaxrs.JaxRsHttpRequest;
 import nablarch.fw.web.HttpResponse;
@@ -14,47 +13,48 @@ import java.util.Optional;
 
 public class AppUserProcessor extends AbstractProcessor<AppUserDTO> {
 
-    private AppUserService appUserService;
+    private Facade appUserFacade;
 
-    public void setAppUserService(AppUserService appUserService) {
-        this.appUserService = appUserService;
+    public void setAppUserFacade(Facade appUserFacade) {
+        this.appUserFacade = appUserFacade;
+    }
+
+    private BaseFacade<AppUserDTO> userFacade() {
+        return (BaseFacade<AppUserDTO>) appUserFacade;
     }
 
     @Override
     public HttpResponse index() {
-        List<AppUserDTO> users = appUserService.getAllUsers()
-                .stream()
-                .map(AppUserMapper::toDto)
-                .toList();
+        List<AppUserDTO> users = userFacade().getAll();
         return ok(users);
     }
 
     @Override
     public HttpResponse create(AppUserDTO dto) {
-        AppUser saved = appUserService.createUser(AppUserMapper.toEntity(dto));
-        return created(AppUserMapper.toDto(saved));
+        AppUserDTO saved = userFacade().create(dto);
+        return created(saved);
     }
 
     @Override
     public HttpResponse find(JaxRsHttpRequest req) {
         String id = req.getParam("id")[0];
-        Optional<AppUser> user = appUserService.getUserById(Long.parseLong(id));
-        return user.map(value -> ok(AppUserMapper.toDto(value)))
+        Optional<AppUserDTO> user = userFacade().getById(Long.parseLong(id));
+        return user.map(this::ok)
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
     public HttpResponse update(AppUserDTO dto, JaxRsHttpRequest req) {
         String id = req.getParam("id")[0];
-        Optional<AppUser> updated = appUserService.updateUser(Long.parseLong(id), AppUserMapper.toEntity(dto));
-        return updated.map(value -> ok(AppUserMapper.toDto(value)))
+        Optional<AppUserDTO> updated = userFacade().update(Long.parseLong(id), dto);
+        return updated.map(this::ok)
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
     public HttpResponse delete(JaxRsHttpRequest req) {
         String id = req.getParam("id")[0];
-        Optional<AppUser> deleted = appUserService.deleteUser(Long.parseLong(id));
+        Optional<AppUserDTO> deleted = userFacade().delete(Long.parseLong(id));
         if (deleted.isEmpty()) {
             throw new NotFoundException();
         }
