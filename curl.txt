@@ -1,5 +1,5 @@
 # 1. Get all users
-curl -X GET http://localhost:8080/action/users \
+curl -X GET http://localhost:7000/action/users \
   -H "Accept: application/json"
 
 

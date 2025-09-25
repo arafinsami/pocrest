@@ -1,31 +1,30 @@
-package com.poc.processor;
+package com.poc.core.interfaces;
 
 import nablarch.fw.jaxrs.JaxRsHttpRequest;
 import nablarch.fw.web.HttpResponse;
 
 public interface BaseProcessor<T> extends Processor {
-
     default HttpResponse index() {
-        throw new UnsupportedOperationException("index not implemented");
+        throw new UnsupportedOperationException();
     }
 
     default HttpResponse create(T dto) {
-        throw new UnsupportedOperationException("create not implemented");
+        throw new UnsupportedOperationException();
     }
 
     default HttpResponse find(JaxRsHttpRequest req) {
-        throw new UnsupportedOperationException("find not implemented");
+        throw new UnsupportedOperationException();
     }
 
     default HttpResponse update(T dto, JaxRsHttpRequest req) {
-        throw new UnsupportedOperationException("update not implemented");
+        throw new UnsupportedOperationException();
     }
 
     default HttpResponse delete(JaxRsHttpRequest req) {
-        throw new UnsupportedOperationException("delete not implemented");
+        throw new UnsupportedOperationException();
     }
 
     default HttpResponse echo(JaxRsHttpRequest req) {
-        throw new UnsupportedOperationException("echo not implemented");
+        throw new UnsupportedOperationException();
     }
 }

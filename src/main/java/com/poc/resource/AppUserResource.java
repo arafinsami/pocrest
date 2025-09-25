@@ -1,8 +1,8 @@
 package com.poc.resource;
 
 import com.poc.dto.AppUserDTO;
-import com.poc.processor.AbstractProcessor;
-import com.poc.processor.Processor;
+import com.poc.core.abstracts.AbstractProcessor;
+import com.poc.core.interfaces.Processor;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;

@@ -68,6 +68,28 @@ curl -X GET http://localhost:8080/action/users/echo/123 -H "Accept: application/
 RESPONSE:
 {"echo":"123"}
 
+
+### Application Process Flow
+
+HTTP Request  
+↓  
+Resource (AppUserResource)  
+↓  
+Processor (AppUserProcessor → AbstractProcessor)  
+↓  
+Pipeline (AppUserProcessorPipeline)  
+↓  
+Step (IndexStep / PersistenceStep / etc.)  
+↓  
+Facade (AppUserFacade)  
+↓  
+Service (AppUserService)  
+↓  
+Repository (AppUserRepository)  
+↓  
+Database
+
+
 ## SUMMARY
 ✔️ Run with DOCKER COMPOSE  
 ✔️ Manage DB with PGADMIN  

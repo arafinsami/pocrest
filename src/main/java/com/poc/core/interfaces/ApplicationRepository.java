@@ -1,4 +1,4 @@
-package com.poc.repository;
+package com.poc.core.interfaces;
 
 import java.util.List;
 

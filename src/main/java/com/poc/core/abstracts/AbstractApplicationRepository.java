@@ -1,5 +1,6 @@
-package com.poc.repository;
+package com.poc.core.abstracts;
 
+import com.poc.core.interfaces.ApplicationRepository;
 import nablarch.common.dao.UniversalDao;
 
 import java.util.List;

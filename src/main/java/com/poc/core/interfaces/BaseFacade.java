@@ -1,4 +1,4 @@
-package com.poc.facade;
+package com.poc.core.interfaces;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,10 +18,10 @@ public interface BaseFacade<T> extends Facade {
     }
 
     default Optional<T> update(Long id, T dto) {
-        throw new UnsupportedOperationException("Update not implemented");
+        return Optional.empty();
     }
 
     default Optional<T> delete(Long id) {
-        throw new UnsupportedOperationException("Delete not implemented");
+        return Optional.empty();
     }
 }

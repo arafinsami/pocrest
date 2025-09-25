@@ -1,20 +1,19 @@
 package com.poc.facade;
 
+import com.poc.core.abstracts.AbstractFacade;
 import com.poc.dto.AppUserDTO;
 import com.poc.entity.AppUser;
 import com.poc.mapper.AppUserMapper;
 import com.poc.service.AppUserService;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Optional;
 
+@Setter
 public class AppUserFacade extends AbstractFacade<AppUserDTO> {
 
     private AppUserService appUserService;
-
-    public void setAppUserService(AppUserService appUserService) {
-        this.appUserService = appUserService;
-    }
 
     @Override
     public List<AppUserDTO> getAll() {

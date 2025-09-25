@@ -5,16 +5,91 @@
         xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration
         https://nablarch.github.io/schema/component-configuration.xsd">
 
+    <!-- ========== REPOSITORY ========== -->
     <component name="appUserRepository" class="com.poc.repository.AppUserRepository"/>
+
+    <!-- ========== SERVICE ========== -->
     <component name="appUserService" class="com.poc.service.AppUserService">
         <property name="appUserRepository" ref="appUserRepository"/>
     </component>
 
+    <!-- ========== FACADE ========== -->
     <component name="appUserFacade" class="com.poc.facade.AppUserFacade">
         <property name="appUserService" ref="appUserService"/>
     </component>
+
+    <!-- ========== STEPS ========== -->
+    <component name="appUserIndexStep" class="com.poc.core.pipeline.IndexStep">
+        <property name="facade" ref="appUserFacade"/>
+    </component>
+
+    <component name="appUserPersistenceStep" class="com.poc.core.pipeline.PersistenceStep">
+        <property name="facade" ref="appUserFacade"/>
+    </component>
+
+    <component name="appUserLoggingStep" class="com.poc.core.pipeline.LoggingStep"/>
+
+    <component name="appUserFindStep" class="com.poc.core.pipeline.FindStep">
+        <property name="facade" ref="appUserFacade"/>
+    </component>
+
+    <component name="appUserUpdateStep" class="com.poc.core.pipeline.UpdateStep">
+        <property name="facade" ref="appUserFacade"/>
+    </component>
+
+    <component name="appUserDeleteStep" class="com.poc.core.pipeline.DeleteStep">
+        <property name="facade" ref="appUserFacade"/>
+    </component>
+
+    <!-- ========== PIPELINES ========== -->
+    <component name="appUserIndexPipeline" class="com.poc.pipeline.AppUserProcessorPipeline">
+        <property name="steps">
+            <list>
+                <component-ref name="appUserIndexStep"/>
+            </list>
+        </property>
+    </component>
+
+    <component name="appUserCreatePipeline" class="com.poc.pipeline.AppUserProcessorPipeline">
+        <property name="steps">
+            <list>
+                <component-ref name="appUserPersistenceStep"/>
+                <component-ref name="appUserLoggingStep"/>
+            </list>
+        </property>
+    </component>
+
+    <component name="appUserFindPipeline" class="com.poc.pipeline.AppUserProcessorPipeline">
+        <property name="steps">
+            <list>
+                <component-ref name="appUserFindStep"/>
+            </list>
+        </property>
+    </component>
+
+    <component name="appUserUpdatePipeline" class="com.poc.pipeline.AppUserProcessorPipeline">
+        <property name="steps">
+            <list>
+                <component-ref name="appUserUpdateStep"/>
+            </list>
+        </property>
+    </component>
+
+    <component name="appUserDeletePipeline" class="com.poc.pipeline.AppUserProcessorPipeline">
+        <property name="steps">
+            <list>
+                <component-ref name="appUserDeleteStep"/>
+            </list>
+        </property>
+    </component>
+
+    <!-- ========== PROCESSOR (Eager) ========== -->
     <component name="appUserProcessor" class="com.poc.processor.AppUserProcessor">
-        <property name="appUserFacade" ref="appUserFacade"/>
+        <property name="indexPipeline" ref="appUserIndexPipeline"/>
+        <property name="createPipeline" ref="appUserCreatePipeline"/>
+        <property name="findPipeline" ref="appUserFindPipeline"/>
+        <property name="updatePipeline" ref="appUserUpdatePipeline"/>
+        <property name="deletePipeline" ref="appUserDeletePipeline"/>
     </component>
 
 </component-configuration>
