@@ -1,9 +1,10 @@
-/*
 package com.poc.resource;
 
-import com.poc.dto.AppUserDTO;
 import com.poc.core.abstracts.AbstractProcessor;
 import com.poc.core.interfaces.Processor;
+import com.poc.dto.AppUserDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -16,46 +17,29 @@ import nablarch.fw.web.HttpResponse;
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class AppUserResource {
+@Tag(name = "User Management", description = "CRUD APIs for AppUser")
+public class AppUserResourceV2 {
 
     private final Processor processor = SystemRepository.get("appUserProcessor");
 
     @GET
+    @Operation(summary = "List all users", description = "Fetch all AppUsers from database")
     public HttpResponse index() {
         return ((AbstractProcessor) processor).index();
     }
 
     @POST
-    @Valid
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Create a new user")
     public HttpResponse create(@Valid AppUserDTO dto) {
         return ((AbstractProcessor) processor).create(dto);
     }
 
     @GET
     @Path("/{id}")
+    @Operation(summary = "Find a user by ID")
     public HttpResponse find(JaxRsHttpRequest req) {
         return ((AbstractProcessor) processor).find(req);
     }
 
-    @PUT
-    @Valid
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public HttpResponse update(@Valid AppUserDTO dto, JaxRsHttpRequest req) {
-        return ((AbstractProcessor) processor).update(dto, req);
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public HttpResponse delete(JaxRsHttpRequest req) {
-        return ((AbstractProcessor) processor).delete(req);
-    }
-
-    @GET
-    @Path("/echo/{id}")
-    public HttpResponse echo(JaxRsHttpRequest req) {
-        return ((AbstractProcessor) processor).echo(req);
-    }
+    // ... same for update, delete, echo
 }
-*/

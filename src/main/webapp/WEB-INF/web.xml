@@ -20,7 +20,7 @@
 
     <filter-mapping>
         <filter-name>entryPoint</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/action/*</url-pattern>
     </filter-mapping>
 
 </web-app>
