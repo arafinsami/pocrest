@@ -4,16 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum ProcessorStatus {
-    RENEW("renew"),
-    SETTLEMENT("settlement"),
-    CONTINUE("continue"),
-    LUCK("luck"),
-    FIRST("first"),
-    CONTINUENOWIN("continue"),
-    RENEWWIN("renew"),
-    CONTINUEWIN("continueWin");
+    APP_USER_INDEX("appUserIndex"),
+    APP_USER_CREATE("appUserCreate"),
+    APP_USER_FIND("appUserFind"),
+    APP_USER_UPDATE("appUserUpdate"),
+    APP_USER_DELETE("appUserDelete");
 
-    private String status;
+    private final String status;
 
     ProcessorStatus(String status) {
         this.status = status;
