@@ -1,5 +1,5 @@
 # USER MANAGEMENT SYSTEM
-A complete User Management System built with **JAVA EE (JAX-RS)**, **Nablarch Framework(https://github.com/nablarch)**, **TOMCAT 11**, and **POSTGRESQL**. It uses DOCKER COMPOSE for database + pgAdmin, and provides REST APIs for full CRUD operations.
+A complete User Management System built with **JAVA EE (JAX-RS)**, **Nablarch Framework(https://github.com/nablarch)**, **TOMCAT 11**, and **PostgreSQL**. It uses DOCKER COMPOSE for database + pgAdmin, and provides REST APIs for full CRUD operations.
 
 ## PREREQUISITES
 - Install **OPENJDK 21**
